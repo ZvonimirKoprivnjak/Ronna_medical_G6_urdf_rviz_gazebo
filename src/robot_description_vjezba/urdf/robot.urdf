@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<robot name="mobilni_robot">
+
+    <material name="blue">
+        <color rgba="0 0 0.5 1"/>
+    </material>
+
+    <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.6 0.4 0.2"/> <!-- sve je u metrima -->
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>  <!-- polozaj pripadajuceg koordinatnog sustava(samog tijela) u prostoru rpy= role pitch yaw-->
+            <!-- rotacije su u radijanima 90=1.57 180=3.14--> 
+            <material name="blue"/>
+        </visual>
+    </link>
+    
+    <link name="desni_kotac_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.05" />
+            </geometry>
+            <origin xyz="0.025 0 0" rpy="1.57 0 0" />
+            <material name="grey" />
+        </visual>    
+    </link>
+    
+    <link name="lijevi_kotac_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.05" />
+            </geometry>
+            <origin xyz="0.025 0 0" rpy="1.57 0 0" />
+            <material name="grey" />
+        </visual>    
+    </link>
+
+    <link name="pomocni_kotac_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="grey" />
+        </visual>    
+    </link>
+
+    <link name="base_footprint"/>
+
+    
+
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link" />
+        <origin xyz="0 0 0.1" rpy="0 0 0" />
+    </joint>
+
+    <joint name="base_right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="desni_kotac_link" />
+        <origin xyz="-0.15 -0.225 0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />   
+    </joint>
+
+    <joint name="base_left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="lijevi_kotac_link" />
+        <origin xyz="-0.15 0.225 0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />   
+    </joint>
+
+    <joint name="base_pomocni_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="pomocni_kotac_link" />
+        <origin xyz="0.2 0 -0.05" rpy="0 0 0" />
+    </joint>
+
+    
+
+
+    
+
+</robot>
+<!-- poziv urdf modela "ros2 launch urdf_tutorial display.launch.py  model:=/home/crta/robot.urdf"-->

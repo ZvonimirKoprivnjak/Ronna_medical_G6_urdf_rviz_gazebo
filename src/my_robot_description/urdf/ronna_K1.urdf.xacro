@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot name="Ronna"  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="ronna_common_properties.xacro"/>
+    <xacro:include filename="ronna_K1_mobilna.urdf.xacro"/>
+    <xacro:include filename="ronna_K1_mobilna_gazebo.xacro"/>  
+        <!-- it is important to include (gazebo.xacro) after urdf because we references on the link in urdf -->
+    <xacro:include filename="ronna_K1_robot.urdf.xacro"/>
+    <xacro:include filename="ronna_K1_robot_gazebo.xacro"/>  
+
+    <joint name="mobile_platform_robot_joint" type="fixed">
+        <parent link="platform_link"/>
+        <child link="robot_base_link"/>
+        <origin xyz="0.185550 0.0 1.1000" rpy="0.0 ${pi/4} 0.0"/>
+    </joint>
+
+
+</robot>

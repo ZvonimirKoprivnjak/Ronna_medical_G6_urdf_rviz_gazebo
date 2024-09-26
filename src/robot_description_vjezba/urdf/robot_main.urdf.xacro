@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot name="mobilni_robot"   xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- <xacro:include filename="robot_common_properties.xacro"/> -->
+    <xacro:include filename="robot.urdf.xacro"/>
+    <xacro:include filename="robot_gazebo.xacro"/>  
+        <!-- it is important to include after urdf because we references on the link in urdf -->
+    
+
+</robot>

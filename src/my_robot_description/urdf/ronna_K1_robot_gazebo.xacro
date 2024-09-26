@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <gazebo reference="robot_base_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <gazebo reference="robot_1_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="robot_2_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <gazebo reference="robot_3_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="robot_4_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <gazebo reference="robot_5_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="robot_6_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <gazebo reference="robot_7_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="adapter_link">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <!-- <gazebo reference="adapter_link">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="guide_tool_link">
+        <material>Gazebo/Blue</material>
+    </gazebo> -->
+    <gazebo>
+        <plugin name="gazebo_ros_joint_state_publisher"
+            filename="libgazebo_ros_joint_state_publisher.so">
+            <!-- Update rate in Hertz -->
+            <update_rate>10</update_rate>
+
+            <!-- Name of joints in the model whose states will be published. -->
+            <joint_name>base_link_1_joint</joint_name>
+            <joint_name>link_1-2_joint</joint_name>
+            <joint_name>link_2-3_joint</joint_name>
+            <joint_name>link_3-4_joint</joint_name>
+            <joint_name>link_4-5_joint</joint_name>
+            <joint_name>link_5-6_joint</joint_name>
+            <joint_name>link_6-7_joint</joint_name>
+
+
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="gazebo_ros_joint_pose_trajectory"
+                filename="libgazebo_ros_joint_pose_trajectory.so">
+
+            <ros>
+
+                <!-- Add a namespace -->
+                <!-- <namespace>/my_namespace</namespace> -->
+
+                <!-- Remap the default topic -->
+                <!-- <remapping>set_joint_trajectory:=my_trajectory</remapping> -->
+
+            </ros>
+
+            <!-- Update rate in Hz -->
+            <update_rate>2</update_rate>
+
+        </plugin>
+    </gazebo>
+
+
+</robot>

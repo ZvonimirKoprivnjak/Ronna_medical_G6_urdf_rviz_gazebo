@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+<!-- links -->
+    <link name="base_footprint"/>
+
+    <link name="platform_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <!-- <mesh filename="package://my_robot_description/meshes/platform.stl" scale="0.001 0.001 0.001"/>  
+                        this only worked for rviz view not for gazebo view-->
+                <mesh filename="file://$(find my_robot_description)/meshes/platform.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0.7" rpy="0 0 0"/>
+            <mass value="365"/>
+            <!-- <inertia ixx="60.048910"  ixy="-0.000254"  ixz="-7.154757" iyy="65.952215" iyz="0.000210" izz="24.168592" /> -->
+            <inertia ixx="60.048910"  ixy="0"  ixz="0" iyy="65.952215" iyz="0" izz="24.168592" />
+
+        </inertial>
+
+        <collision>
+            <geometry>
+                <box size="0.9 0.6 1.4" />
+            </geometry>
+            <origin xyz="0 0 0.7" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <link name="service_cover_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/service_cover.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+            <mass value="5"/>
+            <inertia ixx="0.196649"  ixy="0.000008"  ixz="-0.005308" iyy="0.166915" iyz="-0.000002" izz="0.193389" />
+        </inertial>
+
+        <collision>
+            <geometry>
+                <box size="0.01 0.01 0.01" />
+            </geometry>
+            <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+
+        </collision>
+    </link>
+    
+     <!-- wheels 
+         DIFFERENTIAL drive wheels  
+            ${pi / 2.0}=1.5708=90deg -->
+            <link name="desni_kotac_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0" />
+                    <geometry>
+                        <mesh filename="file://$(find my_robot_description)/meshes/drive_wheel.stl" scale="0.001 0.001 0.001"/>
+                    </geometry>
+                    <material name="green" />
+                </visual>  
+                <inertial>
+                    <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0"/>
+                    <mass value="2"/>
+                    <inertia ixx="0.014021"  ixy="0"  ixz="0" iyy="0.007364" iyz="0" izz="0.007364"/>
+                </inertial>
+
+                <collision>
+                    <geometry>
+                        <cylinder radius="0.1" length="0.06"/>
+                    </geometry>
+                    <origin xyz="0 0 0" rpy="0 0 0"/>
+                </collision>  
+            </link>
+            
+            <link name="lijevi_kotac_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0" />
+                    <geometry>
+                        <mesh filename="file://$(find my_robot_description)/meshes/drive_wheel.stl" scale="0.001 0.001 0.001"/>
+                    </geometry>
+                    <material name="green" />
+                </visual>    
+                <inertial>
+                    <origin xyz="0 0 0" rpy="0 ${pi / 2.0} 0"/>
+                    <mass value="2"/>
+                    <inertia ixx="0.014021"  ixy="0"  ixz="0" iyy="0.007364" iyz="0" izz="0.007364"/>
+                </inertial>
+
+                <collision>
+                    <geometry>
+                        <cylinder radius="0.1" length="0.06"/>
+                    </geometry>
+                    <origin xyz="0 0 0" rpy="0 0 0"/>
+                </collision> 
+            </link>
+ 
+        <!-- omni wheel    p-forward d-right l-left z-back  -->
+            
+            <!-- xacro:macro function that reduces repetition of the same code
+                        it is possible of call macros inside the macros-->
+            <xacro:macro name="omni_whell" params="name" >
+                <link name="${name}">
+                    <visual>
+                        <geometry>
+                            <mesh filename="file://$(find my_robot_description)/meshes/ommni_suport_wheel.stl" scale="0.001 0.001 0.001"/>
+                        </geometry>
+                        <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                        <material name="grey" />
+                    </visual> 
+
+                    <inertial>
+                        <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                        <mass value="0.5"/>
+                        <inertia ixx="0.000638"  ixy="0"  ixz="0" iyy="0.000638" iyz="0" izz="0.007364" />
+                    </inertial>
+
+                    <collision>
+                        <geometry>
+                            <cylinder radius="0.065" length="0.08"/>
+                        </geometry>
+                        <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    </collision>   
+                </link>
+            </xacro:macro>
+
+            <xacro:omni_whell name="omni_pd_link"/>
+            <xacro:omni_whell name="omni_pl_link"/>
+            <xacro:omni_whell name="omni_zd_link"/>
+            <xacro:omni_whell name="omni_zl_link"/>
+            
+            <!-- without using the macro function we have a lot of repetition of the same code-->
+            
+            <!--<link name="omni_pd_link">
+                <visual>
+                    <geometry>
+                        <mesh filename="package://my_robot_description/meshes/omni_suport_wheel.stl" scale="0.001 0.001 0.001"/>
+                    </geometry>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <material name="red" />
+                </visual> 
+
+                <inertial>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <mass value="0.5"/>
+                    <inertia ixx="638"  ixy="0"  ixz="0" iyy="638" iyz="0" izz="7364" />
+                </inertial>
+
+                <collision>
+                    <geometry>
+                        <cylinder radius="0.06" length="0.08"/>
+                    </geometry>
+                </collision>   
+                
+            </link>
+
+            <link name="omni_pl_link">
+                <visual>
+                    <geometry>
+                        <mesh filename="package://my_robot_description/meshes/omni_suport_wheel.stl" scale="0.001 0.001 0.001"/>
+                    </geometry>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <material name="red" />
+                </visual>  
+
+                <inertial>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <mass value="0.5"/>
+                    <inertia ixx="638"  ixy="0"  ixz="0" iyy="638" iyz="0" izz="7364" />
+                </inertial>
+
+                <collision>
+                    <geometry>
+                        <cylinder radius="0.06" length="0.08"/>
+                    </geometry>
+                </collision>  
+            </link>
+
+            <link name="omni_zd_link">
+                <visual>
+                    <geometry>
+                        <mesh filename="package://my_robot_description/meshes/omni_suport_wheel.stl" scale="0.001 0.001 0.001"/>
+                    </geometry>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <material name="red" />
+                </visual>  
+
+                <inertial>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <mass value="0.5"/>
+                    <inertia ixx="638"  ixy="0"  ixz="0" iyy="638" iyz="0" izz="7364" />
+                </inertial>
+
+                <collision>
+                    <geometry>
+                        <cylinder radius=0.06 length=0.08/>
+                    </geometry>
+                </collision>  
+            </link>
+
+            <link name="omni_zl_link">
+                <visual>
+                    <geometry>
+                        <mesh filename="package://my_robot_description/meshes/omni_suport_wheel.stl" scale="0.001 0.001 0.001"/>
+                    </geometry>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <material name="red" />
+                </visual>  
+
+                <inertial>
+                    <origin xyz="0 -0.016 0" rpy="${pi / 2.0} 0 0" />
+                    <mass value="0.5"/>
+                    <inertia ixx="638"  ixy="0"  ixz="0" iyy="638" iyz="0" izz="7364" />
+                </inertial>
+
+                <collision>
+                    <geometry>
+                        <cylinder radius=0.06 length=0.08/>
+                    </geometry>
+                </collision>  
+            </link> -->
+
+
+
+
+    
+
+<!-- JOINT CONFIGURATION -->
+
+    <joint name="footprint_platforma_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="platform_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="platforma_cover_joint" type="fixed">
+        <parent link="platform_link"/>
+        <child link="service_cover_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <!-- diff drive joint -->
+
+        <joint name="platforma_right_wheel_joint" type="continuous">
+            <parent link="platform_link"/>
+            <child link="desni_kotac_link" />
+            <origin xyz="0 -0.2239445 0.03" rpy="${pi / 2.0} 0 0" />
+            <axis xyz="0 0 1" />   
+        </joint>
+
+        <joint name="platforma_left_wheel_joint" type="continuous">
+            <parent link="platform_link"/>
+            <child link="lijevi_kotac_link" />
+            <origin xyz="0 0.2239445 0.03" rpy="${pi / 2.0} 0 0" />
+            <axis xyz="0 0 1" />   
+        </joint>
+    <!-- omni joint also posible with marco functions-->
+        <!-- <joint name="platforma_omni_pd_joint" type="fixed">
+            <parent link="platform_link"/>
+            <child link="omni_pd_link" />
+            <origin xyz="0.292 -0.232 0" rpy="0 0 0" />
+            <axis xyz="0 1 0" />   
+        </joint>
+
+        <joint name="platforma_omni_pl_joint" type="fixed">
+            <parent link="platform_link"/>
+            <child link="omni_pl_link" />
+            <origin xyz="0.292 0.232 0" rpy="0 0 0" />
+            <axis xyz="0 1 0" />   
+        </joint>
+
+        <joint name="platforma_omni_zd_joint" type="fixed">
+            <parent link="platform_link"/>
+            <child link="omni_zd_link" />
+            <origin xyz="-0.315 -0.182 0" rpy="0 0 0" />
+            <axis xyz="0 1 0" />   
+        </joint>
+
+        <joint name="platforma_omni_zl_joint" type="fixed">
+            <parent link="platform_link"/>
+            <child link="omni_zl_link" />
+            <origin xyz="-0.315 0.182 0" rpy="0 0 0" />
+            <axis xyz="0 1 0" />   
+        </joint> -->
+
+
+        <xacro:macro name="omni_joint" params="name position_x position_y">
+            <joint name="platforma_omni_${name}_joint" type="fixed">
+                <parent link="platform_link"/>
+                <child link="omni_${name}_link" />
+                <origin xyz="${position_x} ${position_y} 0" rpy="0 0 0" />
+                <axis xyz="0 1 0" />   
+            </joint>
+        </xacro:macro>
+
+
+        <xacro:omni_joint name="pd" position_x="0.292" position_y="-0.232" />
+        <xacro:omni_joint name="pl" position_x="0.292" position_y="0.232" />
+        <xacro:omni_joint name="zd" position_x="-0.315" position_y="-0.182" />
+        <xacro:omni_joint name="zl" position_x="-0.315" position_y="0.182" />
+
+</robot>
+

@@ -1,0 +1,35 @@
+<launch>
+        <!-- we start robot_state publisher-->
+        <let name="urdf_RONNA_path" 
+                value="$(find-pkg-share my_robot_description)/urdf/ronna_K1.urdf.xacro"/>
+
+        <node pkg="robot_state_publisher" exec="robot_state_publisher">
+                        <param name="robot_description"
+                                value="$(command 'xacro $(var urdf_RONNA_path)')" /> 
+        
+        </node>
+
+        <!--we start gazebo-->
+        <include file = "$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py"/>
+
+
+        <!--we start gazebo with existing(external) world which is in folder ronna_bringup/worlds-->
+                <!-- <include file = "$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
+                        <arg name="world" value="$(find-pkg-share ronna_bringup)/worlds/here_goes_name_of_the_world.world"/>
+                </include> -->
+
+
+        <!--spawn the robot in gazebo-->
+        <node pkg = "gazebo_ros" exec= "spawn_entity.py"
+                args = "-topic robot_description -entity RONNA" />
+
+        <!--we start rviz-->
+        <!--because we don't have joint_state_publisher, we have transform problem with drive wheel that are not fix to platform
+                        this problem is solved when we add gazebo plugin that we see clear simulation in rviz-->
+        <let name="rviz_config_path"
+            value="$(find-pkg-share ronna_bringup)/rviz/urdf_config.rviz" />   
+
+        <node pkg="rviz2" exec="rviz2" output="screen" 
+                args="-d $(var rviz_config_path)" />
+    
+</launch>

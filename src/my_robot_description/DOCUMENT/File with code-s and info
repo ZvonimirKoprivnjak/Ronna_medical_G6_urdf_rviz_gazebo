@@ -1,0 +1,67 @@
+
+
+Pokretanje u gazeboo
+
+1.terminal 	ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro ronna_K1_K2.urdf.xacro)"    
+		///prije pokretanja u 1. termionalu doći do mape u kojoj je urdf npr. ros2_ws/src/my_robot_description/urdf   i od tu pokretati naredbu
+2.terminal	ros2 launch gazebo_ros gazebo.launch.py
+3. terminal	ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity moj_robot
+										<!--u entity se upisuje željeni naziv -->
+
+#robot za vjezbu
+ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro robot.urdf.xacro)"
+
+
+Ili ovako
+1.terminal	ros2 launch my_robot_description display.launch.xml  use_sim_time:=true
+2.terminal	ros2 launch gazebo_ros gazebo.launch.py
+3.terminal 	ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity moj_robot
+
+
+
+Pomoću sljedećih naredbi pokrećemo sve ovo iznad od jednom
+
+ros2 launch vjezba_bringup robot_vjezba_gazebo.launch.xml		#robot za vježbu
+
+ros2 launch ronna_bringup ronna_gazebo_launch.xml			#Ronna
+
+
+
+
+ros2 launch my_robot_description display.launch.xml
+
+ros2 launch robot_description_vjezba display.launch.xml
+
+
+
+	KREIRANJE NOVOG PAKETA BEZ DEFINICIJE PROGRAMSKOG JEZIKA odnosno ako nije ni python ni c++
+1. cd ros2_ws/src
+2 ros2 pkg create --ime želejnog paketa--
+
+
+rqt_graph -- iznimno koristan alat da vidimo kako su topici povezani odnosno graph s temama, čvorovima, akcijama itd. 
+
+
+
+
+ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+
+
+ros2 topic pub -1 /set_joint_trajectory trajectory_msgs/msg/JointTrajectory '{header:
+{frame_id: base_footprint}, joint_names: [base_link_1_joint, link_1-2_joint, link_2-3_joint, link_3-4_joint, link_4-5_joint, link_5-6_joint, link_6-7_joint],
+points: [ {positions: {0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0}} ]}'
+
+PLUGINS FOR GAZEBO
+
+https://github.com/ros-simulation/gazebo_ros_pkgs/tree/ros2/gazebo_plugins/include/gazebo_plugins    
+
+
+
+NAREDBA KOJOM VIDIMO CIJELU TF STRUKTURU ROBOTA -o ime koje smo dali u ENTITY kod launch file-a
+ros2 run tf2_tools view_frames -o RONNA        
+file(graf) se sprema u home directory
+
+
+
+
+
