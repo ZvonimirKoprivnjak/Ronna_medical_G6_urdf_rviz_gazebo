@@ -63,40 +63,9 @@ file(graf) se sprema u home directory
 
 
 
------------------------------------------------------------------NOVO-------------------------------------------------------
-ros2 topic info /set_joint_trajectory 
-Type: trajectory_msgs/msg/JointTrajectory
-Publisher count: 0
-Subscription count: 1
--------------------------------------------------
+Dodatni paketni korišteni u radu
+https://trimesh.org
 
-ros2 interface show trajectory_msgs/msg/JointTrajectory
+https://www.youtube.com/watch?v=c6Bxbq8UdaI&t=686s
 
-# The header is used to specify the coordinate frame and the reference time for
-# the trajectory durations
-std_msgs/Header header
-	builtin_interfaces/Time stamp
-		int32 sec
-		uint32 nanosec
-	string frame_id
-
-# The names of the active joints in each trajectory point. These names are
-# ordered and must correspond to the values in each trajectory point.
-string[] joint_names
-
-# Array of trajectory points, which describe the positions, velocities,
-# accelerations and/or efforts of the joints at each time point.
-JointTrajectoryPoint[] points
-	float64[] positions
-	float64[] velocities
-	float64[] accelerations
-	float64[] effort
-	builtin_interfaces/Duration time_from_start
-		int32 sec
-		uint32 nanosec
-
-
-
-
-
-
+https://github.com/ros-industrial/kuka_experimental/tree/melodic-devel/kuka_lbr_iiwa_support

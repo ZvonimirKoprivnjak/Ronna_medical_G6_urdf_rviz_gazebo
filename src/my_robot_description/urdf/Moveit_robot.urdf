@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<robot name="mobilni_robot">
+
+    <material name="blue">
+        <color rgba="0 0 0.5 1"/>
+    </material>
+
+    <material name="green">
+        <color rgba="0 0.5 0 1"/>
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.45 0.02345 1"/>
+    </material>
+
+    <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material>
+
+<!--2.967059->170   2.09439->120      3.05433->175 -->
+
+<!-- LINKOVI -->
+    <!-- <link name="base_robota"/> -->
+
+    <link name="robot_base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>  <!-- tu su definirani pomaci tijela u odnosu na postojeći koord tijela-->
+            <geometry>
+                <!-- <mesh filename="package://my_robot_description/meshes/robot_base.stl" scale="0.001 0.001 0.001"/> 
+                        this only worked for rviz view-->
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_base.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="5.85"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_base.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="file://$(find my_robot_description)/collision/base_link.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    
+    </link>
+
+    <!-- JOINT KONFIGURACIJA -->
+    <!--link rotations refer to the child coordinate system
+        while rotations of the child in relation to the parent are defined exactly as the child is rotated in the parent coordinate system 
+    rotacije zglobova odnose se u odnosu na child koordinatni sustav
+        dok se rotacije child u odnosu na parent definiraju tocno tako cild se rotira u koord sustavu parent-->
+    
+    <joint name="base_link_1_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-2.967059" upper="2.967059" velocity="1.71042"/>
+        <origin xyz="0 0 0.36" rpy="0 0 0 "/>
+        <parent link="robot_base_link"/>
+        <child link="robot_1_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    
+    </joint>
+
+    <link name="robot_1_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_1.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="5.85"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_1.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_1.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+
+    </link>
+
+    <joint name="link_1-2_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-2.09439" upper="2.09439" velocity="1.71042"/>
+        <origin xyz="0 0 0" rpy="-1.57 0 0 "/>
+        <parent link="robot_1_link"/>
+        <child link="robot_2_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="robot_2_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_2.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="4.9289"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_2.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_2.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="link_2-3_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-2.967059" upper="2.967059" velocity="1.7452"/>
+        <origin xyz="0 -0.420 0" rpy="1.57070 0 0"/>
+        <parent link="robot_2_link"/>
+        <child link="robot_3_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="robot_3_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_3.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="3.3683"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_3.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_3.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="link_3-4_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-2.09439" upper="2.09439" velocity="2.26893"/>
+        <origin xyz="0 0 0" rpy="1.57070 0 0 "/>
+        <parent link="robot_3_link"/>
+        <child link="robot_4_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="robot_4_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_4.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="4.3087"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_4.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_4.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="link_4-5_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-2.967059" upper="2.967059" velocity="2.44346"/>
+        <origin xyz="0 0.4 0" rpy="-1.57070 0 0 "/>
+        <parent link="robot_4_link"/>
+        <child link="robot_5_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="robot_5_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_5.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="3.5167"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_5.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_5.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="link_5-6_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-2.09439" upper="2.09439" velocity="3.14159"/>
+        <origin xyz="0 0 0" rpy="-1.57070 0 0 "/>
+        <parent link="robot_5_link"/>
+        <child link="robot_6_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="robot_6_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_6.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1.5101"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_6.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_6.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="link_6-7_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="0" lower="-3.05433" upper="3.05433" velocity="3.14159"/>
+        <origin xyz="0 -0.126 0" rpy="1.5707 0 0 "/>
+        <parent link="robot_6_link"/>
+        <child link="robot_7_link"/>
+        <dynamics damping="0.05" friction="0.1"/>
+    </joint>
+
+    <link name="robot_7_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_7.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1.0042"/>
+            <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+        </inertial>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/robot_link_7.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://my_robot_description/collision/link_7.stl" scale="0.001 0.001 0.001"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+<!-- Depending on the need, one of the tools is activated-->
+
+    <link name="adapter_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/adapter.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <joint name="link_7_adapter_joint" type="fixed">
+            <parent link="robot_7_link"/>
+            <child link="adapter_link"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+
+    <!-- <link name="camera_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/camera_tool_rev0.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <joint name="link_7_camera_joint" type="fixed">
+            <parent link="robot_7_link"/>
+            <child link="camera_link"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint> -->
+
+
+
+    <!-- <link name="guide_tool_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file://$(find my_robot_description)/meshes/guide_tool.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+
+    <joint name="link_7_guide_tool_joint" type="fixed">
+            <parent link="robot_7_link"/>
+            <child link="guide_tool_link"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint> -->
+
+
+</robot>
