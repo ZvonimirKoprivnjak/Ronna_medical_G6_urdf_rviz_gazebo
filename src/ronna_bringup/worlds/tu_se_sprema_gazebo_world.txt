@@ -1,0 +1,2 @@
+In this folder, you save the configuration (environment) of the world so that every time you start it, you have the same ready configuration 
+(environment) so that it is not necessary to build the environment from scratch every time
