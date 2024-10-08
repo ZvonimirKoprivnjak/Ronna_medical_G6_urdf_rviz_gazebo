@@ -14,6 +14,7 @@
 
 
         <!--we start gazebo with existing(external) world which is in folder ronna_bringup/worlds-->
+        <!-- if world doesn't exist first you need to configure some world in gazebo and save it in folder ronna_bringup/worlds-->
                 <!-- <include file = "$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
                         <arg name="world" value="$(find-pkg-share ronna_bringup)/worlds/here_goes_name_of_the_world.world"/>
                 </include> -->
@@ -24,11 +25,11 @@
                 args = "-topic robot_description -entity RONNA" />
 
         <!--we start rviz-->
-        <!--because we don't have joint_state_publisher, we have transform problem with drive wheel that are not fix to platform
+        <!--because we don't have joint_state_publisher, in raviz we have transform problem with drive wheel that are not fix to platform
                         this problem is solved when we add gazebo plugin that we see clear simulation in rviz-->
         <let name="rviz_config_path"
             value="$(find-pkg-share ronna_bringup)/rviz/urdf_config.rviz" />   
-
+                <!-- in urdf_config.rviz we have save configuration of rviz, so we don't need to set configuration every time that we start rviz -->
         <node pkg="rviz2" exec="rviz2" output="screen" 
                 args="-d $(var rviz_config_path)" />
     
